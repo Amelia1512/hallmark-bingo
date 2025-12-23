@@ -74,46 +74,46 @@ return (
 
     <h1 className="title">🎄 Hallmark Bingo 🎄</h1>
 
-    <div className="card-container">
-      <div className="grid-container">
-        {/* BINGO text overlay centered on the grid */}
-        {bingo && <div className="bingo-text">BINGO!</div>}
+    <div className="card-and-controls">
+      <div className="card-container">
+        <div className="grid-container">
+          {/* BINGO text overlay */}
+          {bingo && <div className="bingo-text">BINGO!</div>}
 
-        {/* Bingo card grid */}
-        <div className="grid">
-          {card.map(square => (
-            <button
-              key={square.id}
-              className={square.checked ? "checked" : ""}
-              onClick={() => toggleSquare(square.id)}
-            >
-              <span className="square-text">{square.text}</span>
-            </button>
-          ))}
+          {/* Bingo card grid */}
+          <div className="grid">
+            {card.map(square => (
+              <button
+                key={square.id}
+                className={square.checked ? "checked" : ""}
+                onClick={() => toggleSquare(square.id)}
+              >
+                <span className="square-text">{square.text}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
 
-    <div className="controls">
-      <button onClick={createNewCard}>🎁 New Card</button>
-      <button
-        onClick={() => {
-          const resetCard = card.map(s => ({
-            ...s,
-            checked: s.text === "FREE SPACE" ? true : false
-          }));
-          setCard(resetCard);
-          localStorage.setItem(STORAGE_KEY, JSON.stringify(resetCard));
-        }}
-      >
-        ♻ Reset
-      </button>
+      {/* Controls directly below the grid */}
+      <div className="controls">
+        <button onClick={createNewCard}>🎁 New Card</button>
+        <button
+          onClick={() => {
+            const resetCard = card.map(s => ({
+              ...s,
+              checked: s.text === "FREE SPACE" ? true : false
+            }));
+            setCard(resetCard);
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(resetCard));
+          }}
+        >
+          ♻ Reset
+        </button>
+      </div>
     </div>
   </div>
 );
-
-
-
 }
 
 export default App;

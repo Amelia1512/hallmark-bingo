@@ -7,18 +7,17 @@ html, body {
   box-sizing: border-box;
   overflow-x: hidden;
   font-family: sans-serif;
+  background: #0b3d2e; /* matches app background */
 }
+
 
 .app {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between; /* keeps card and buttons spaced */
-  min-height: 100vh;
+  padding: 1rem;
   background: #0b3d2e;
   color: white;
-  padding: 1rem;
-  box-sizing: border-box;
 }
 
 .title {
@@ -28,6 +27,17 @@ html, body {
   margin-bottom: 1rem;
   white-space: normal; /* allow wrapping if needed */
   line-height: 1.1;
+}
+
+/* Wraps grid and buttons together so buttons sit directly under the grid */
+.card-and-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 500px; /* match your grid max-width */
+  gap: 1rem;        /* space between grid and buttons */
+  margin-top: 1rem; /* optional spacing under title */
 }
 
 
