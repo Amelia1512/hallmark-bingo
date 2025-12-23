@@ -1,21 +1,31 @@
-# Use Node LTS
-FROM node:22-alpine
+# ---------- Build Stage ----------
+FROM node:20-alpine AS build
 
-# Set working directory
 WORKDIR /app
 
 # Copy package files first (better caching)
-COPY package*.json ./
+COPY package.json package-lock.json ./
+RUN npm ci
 
-# Install dependencies (React + Express)
-RUN npm install
-
-# Copy the rest of the app
+# Copy source code
 COPY . .
 
-# Expose ports (change if needed)
-EXPOSE 3000
-EXPOSE 5173
+# Build the Vite app
+RUN npm run build
 
-# Run dev script
-CMD ["npm", "run", "dev"]
+
+# ---------- Production Stage ----------
+FROM nginx:alpine
+
+# Remove default nginx static assets
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copy build output to nginx
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Copy custom nginx config (optional but recommended)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
